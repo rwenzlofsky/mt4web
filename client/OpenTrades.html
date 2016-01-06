@@ -1,0 +1,43 @@
+<template name="OpenTrades">
+
+<div class="col s6">
+  <div class="card-panel white z-depth-2">     
+
+    <table>
+      <thead class="white-black">
+        
+        <tr>
+            <th data-field="symbol">Symbol</th>
+            <th data-field="ticket">Ticket</th>
+            <th data-field="price">Open</th>
+            <th data-field="trade">Close</th>
+            <th data-field="trade">SL</th>
+            <th data-field="trade">TP</th>
+            <th data-field="profit">Profit</th>
+        </tr>
+      </thead>
+    <tbody class="black-text">                  
+      {{#each theorders}}
+          
+          <tr>
+            <td>{{symbol}}</td>
+            <td>{{ticket}}</td>
+            <td>{{open}}</td>
+            <td>{{close}}</td>
+            <td>{{stoploss}}</td>
+            <td>{{takeprofit}}</td>
+            <td>{{orderprofit}}</td>
+            <td>
+            <a class="waves-effect waves-light btn js-close-button light-blue"><i class="material-icons left">Close</i></a>
+            </td>
+          </tr>
+        
+      {{/each}}
+    </tbody>
+    
+    </table>
+    
+  </div>
+</div>   
+
+</template>

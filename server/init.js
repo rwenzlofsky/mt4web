@@ -1,0 +1,6 @@
+
+Meteor.startup(function() {
+
+});
+
+

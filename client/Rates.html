@@ -1,0 +1,100 @@
+
+<template name="Rates">
+<div class="container">
+    
+       <div class="col-lg-2 rates">
+
+              <ul class="list-group">
+               
+               {{#each thesymbols}}
+
+                <li class="list-group-item">{{symbol}}</li>
+
+              {{/each}}
+              </ul>
+            
+      
+          </div>
+
+           <div class="col-lg-2 rates">
+
+
+                <div class="list-group">
+                  
+               {{#each thesymbols}}
+                <a href="#" class="list-group-item js-trade-button-sell js-hover-bid">{{bid}}</a>
+              {{/each}}
+          
+            </div>
+      
+          </div>
+
+
+           <div class="col-lg-2 rates">
+      
+
+              <div class="list-group">               
+              {{#each thesymbols}}
+                <a href="#" class="list-group-item js-trade-button-buy js-hover-ask">{{ask}}</a>
+                
+                
+              {{/each}}
+              </div>
+
+          </div>
+
+            <div class="col-lg-6 rates">
+            {{#if editmode}}
+              <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">New Trade</h3>
+              </div>
+              <div class="panel-body">
+
+              
+                
+                <h3>
+                    
+                        <span class="label label-success">{{editsymbol}}</span>
+                        <span class="label label-success">{{openprice}}</span>
+                    
+                </h3>
+               
+               {{#autoForm collection="newTrades" id="insertNewTrade" type="insert"}}
+                  <fieldset>
+                                        
+                    {{> afQuickField name="symbol"}}
+                    {{> afQuickField name="volumen" step="0.10"}}
+                    {{> afQuickField name="stoploss"}}
+                    {{> afQuickField name="takeprofit"}}                    
+                    {{> afQuickField name="comment"}}
+                    {{> afQuickField name="tradetypes" options="allowed"}}
+                    {{#if afFieldValueIs name="tradetypes" value="Market"}}   
+                          {{> afQuickField name="maxdevpoints"}}
+                    {{/if}}
+                    {{#if afFieldValueIs name="tradetypes" value="Limit"}}   
+                           {{> afQuickField name="pendingprice" value=openprice }}      
+                    {{/if}}
+                    {{#if afFieldValueIs name="tradetypes" value="Stop"}}   
+                           {{> afQuickField name="pendingprice" value=openprice}}      
+                    {{/if}}
+
+                  </fieldset>
+                  <button type="submit" class="btn btn-primary">Send</button>
+                  <button type="button" class="btn btn-primary js-notrade">Cancel</button>
+                {{/autoForm}}
+
+                
+              
+              
+                           
+            </div>  
+            </div>
+            {{/if}}
+            </div>
+            
+           
+    
+        
+</div>
+</template>          
