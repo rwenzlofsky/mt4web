@@ -9,99 +9,76 @@ Picker.route('/mt4/:account', function(params,req,res,next) {
 
   
   obj=JSON.parse(accountJSON);
+  console.log(obj);
   
-
-  // If no Account Item is availabe, insert one
   
   if(AccountInfo.find().count() == 0) {
-
-	AccountInfo.insert(obj);	
-
- }
+	    AccountInfo.insert(obj);	
+  }
 	
-else {
-
-    AccountInfo.update({},   {$set: obj });
-
-}
+  else {
+      AccountInfo.update({},   {$set: obj });
+  }
 
   
 });
 
 
+// Fetch all open orders
 
 Picker.route('/openorders/:orders', function(params,req,res,next) {
 
   res.end("Orders cleaned up");   
-  
-  var oneTrade = params.orders.split(',');
-  var user=oneTrade[0];
-  var ticket=parseInt(oneTrade[1]);
-  var symbol=oneTrade[2];
-  var open=Number(oneTrade[3]);
-  var close=Number(oneTrade[4]);
-  var lots=Number(oneTrade[5]);
-  var commission=Number(oneTrade[6]);
-  var swap=Number(oneTrade[7]);
-  var expiration=oneTrade[8];
-  var comment=oneTrade[9];
-  var stoploss=Number(oneTrade[10]);
-  var takeprofit=Number(oneTrade[11]);
-  var type=oneTrade[12];
-  var opentime=oneTrade[13];
-  var closetime=oneTrade[14];
-  var magic=oneTrade[15];
-  var profit=Number(oneTrade[16]);
+
+  var x = params.orders;
+  var uri_dec = decodeURIComponent(x);
+  var accountJSON = uri_dec.replace(/'/g,"\"");
 
   
- 
-//console.log(ticket);  
+  obj=JSON.parse(accountJSON);
+  
 
-
-OpenOrders.update({ticket: ticket}, 
+  OpenOrders.update({ticket: obj.ticket}, 
           {$set: {
-            user: user, 
-            ticket: ticket,
-            symbol: symbol,
-            open: open,
-            close: close,
-            lots: lots,
-            commission: commission,
-            swap: swap,
-            expiration: expiration,
-            comment: comment,
-            stoploss: stoploss,
-            takeprofit: takeprofit,
-            type: type,
-            opentime: opentime,
-            closetime: closetime,
-            magic: magic,
-            orderprofit: profit
+            user: obj.user, 
+            ticket: obj.ticket,
+            symbol: obj.symbol,
+            open: obj.open,
+            close: obj.close,
+            lots: obj.lots,
+            commission: obj.commission,
+            swap: obj.swap,
+            expiration: obj.expiration,
+            comment: obj.comment,
+            stoploss: obj.stoploss,
+            takeprofit: obj.takeprofit,
+            type: obj.type,
+            opentime: obj.opentime,
+            closetime: obj.closetime,
+            magic: obj.magic,
+            orderprofit: obj.profit
 
 
-          }}, {upsert: true}
-
-);
-
+          }}, {upsert: true});
 
 
 });
+
+// Remove all orders from collection which are not in the order list from MT4
 
 Picker.route('/cleanuporders/:orderlist', function(params,req,res,next) {
   
   res.end("Orders cleaned up");
   var theOrders = params.orderlist.split(',');
-  
-  for(i=0;i<theOrders.length;i++) {
+  var theUser = theOrders[0];
+
+  for(i=1;i<theOrders.length;i++) {
       theOrders[i] = parseInt(theOrders[i]);
 
   }
  
-
-  OpenOrders.remove({ ticket: { $nin: theOrders }});
+  OpenOrders.remove({ ticket: { $nin: theOrders }, user: {theUser} });
   
-  
-
 });
 
 
@@ -110,39 +87,33 @@ Picker.route('/cleanuporders/:orderlist', function(params,req,res,next) {
 
 Picker.route('/allsymbols/:symbols', function(params,req,res,next) {
   
+  res.end("Symbol-List received");
 
-  res.end("Symbols received");
-  //console.log(params.symbols);
-  
-  var theSymbols = params.symbols.split(',');
+  var x = params.symbols;
+  var uri_dec = decodeURIComponent(x);
+  var theJSON = uri_dec.replace(/'/g,"\"");
+  var j=JSON.parse(theJSON);
   var theSymbolArray = [];
-
-  var i=0;
-  var j=0;
-  while(i<theSymbols.length) {
-
-      var theSymbol = theSymbols[i];
-      theSymbolArray[j] = theSymbols[i];
-      theSymbol = decodeURIComponent(theSymbol);
-      var theBid = parseFloat(theSymbols[i+1]);
-      var theAsk  = parseFloat(theSymbols[i+2]); 
-      i+=3;
-      j+=1;
-
-
-     Symbols.update({symbol: theSymbol}, 
-            {$set: {
-              symbol: theSymbol, 
-              bid: theBid,
-              ask: theAsk
-            }}, {upsert: true}); 
-  }
-
-  console.log(theSymbolArray);
-
-  Symbols.remove({ symbol: { $nin: theSymbolArray }});
   
+//  console.log(j);
 
+  j.forEach(function(theSymbol) {
+     
+     Symbols.update({symbol: theSymbol.s, user: theSymbol.u}, 
+                {$set: {
+                  symbol: theSymbol.s, 
+                  bid: theSymbol.b,
+                  ask: theSymbol.a,
+                  user: theSymbol.u
+                }}, {upsert: true}); 
+
+     theSymbolArray.push(theSymbol.s);
+    
+
+  });
+
+  
+  Symbols.remove({ symbol: { $nin: theSymbolArray }});
 
 
 }); 
