@@ -348,7 +348,7 @@ void sendMarketStatus(int status) {
    
    if(status != lastMarketStatus) {
    
-         if(status == 0) {
+         if(status != 1) {
             strStatus="closed";
          }
          else {
@@ -377,8 +377,8 @@ void OnTimer()
    Print("Timer Event");
    // Market is open
    
-  
-         sendMarketStatus(1);
+         Print(MarketInfo(Symbol(), MODE_TRADEALLOWED));
+         sendMarketStatus(MarketInfo(Symbol(), MODE_TRADEALLOWED));
          handleQueue();
          cleanupOpenOrders();
       	getAllOpenOrders();

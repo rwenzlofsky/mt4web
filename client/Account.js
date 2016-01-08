@@ -68,6 +68,10 @@ Template.Account.helpers (
       return AccountInfo.findOne({}).currency;
 
     },
+    marketstatus: function() {
+      return marketStatus.findOne({}).status;
+
+    }
   
  	
     

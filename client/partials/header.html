@@ -1,14 +1,20 @@
 <template name="header">
 
-<nav class="navbar navbar-default navbar-static-top">
-  <div class="container-fluid">
-    <ul class="nav navbar-nav">
-        <li><a href="/opentrades"><span class="navtext">Open Trades</span></a></li>
-        <li><a href="/rates"><span class="navtext">Rates</span></a></li>
-        <li><span class="navtext">{{> loginButtons}}</span></li>
-    </ul>
-  </div>
-</nav>
+
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Sevenpips Forex</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">{{> loginButtons}}</a></li>
+      </ul>
+
+       <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="zmdi zmdi-plus-circle"></i></a>
+    </div>
+  </nav>
+
+
 
 </template>
 

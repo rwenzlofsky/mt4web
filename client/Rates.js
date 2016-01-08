@@ -73,6 +73,8 @@ Template.Rates.helpers (
 
 
  },
+
+ 
  thesymbols: function() {
       
             

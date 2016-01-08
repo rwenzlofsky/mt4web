@@ -27,5 +27,7 @@ meteorhacks:picker
 reactive-var
 accounts-password
 accounts-ui
-twbs:bootstrap
 meteortoys:allthings
+materialize:materialize
+ixdi:material-design-iconic-font
+raix:handlebar-helpers

@@ -1,58 +1,48 @@
 
 <template name="Rates">
-<div class="container">
-    
-       <div class="col-lg-2 rates">
 
-              <ul class="list-group">
-               
-               {{#each thesymbols}}
-
-                <li class="list-group-item">{{symbol}}</li>
-
-              {{/each}}
-              </ul>
-            
-      
-          </div>
-
-           <div class="col-lg-2 rates">
-
-
-                <div class="list-group">
-                  
-               {{#each thesymbols}}
-                <a href="#" class="list-group-item js-trade-button-sell js-hover-bid">{{bid}}</a>
-              {{/each}}
-          
+ <div class="card-panel white">
+ <div class="row">
+       
+      <div class="col s12 m6 l6">
+        <div class="row">   
+            <div class="col s2 m2 l2 nospace">
+                  <ul class="collection">
+                  {{#each thesymbols}} 
+                      <li class="collection-item black-text itemnospace">{{symbol}}</li>
+                  {{/each}}                      
+                  </ul>
             </div>
-      
-          </div>
-
-
-           <div class="col-lg-2 rates">
-      
-
-              <div class="list-group">               
-              {{#each thesymbols}}
-                <a href="#" class="list-group-item js-trade-button-buy js-hover-ask">{{ask}}</a>
-                
-                
-              {{/each}}
+            <div class="col s2 m2 l2 nospace">
+              <div class="collection ">
+                  {{#each thesymbols}} 
+                    {{#if $lte bid oldbid }}
+                      <a href="#!" class="collection-item red-text itemnospace js-trade-button-sell">{{bid}}</a>
+                    {{else}}
+                      <a href="#!" class="collection-item blue-text itemnospace js-trade-button-sell">{{bid}}</a>
+                    {{/if}}
+                    
+                  {{/each}}                      
               </div>
+            </div>
+            <div class="col s2 m2 l2 nospace">
+                <div class="collection ">
+                  {{#each thesymbols}} 
+                    {{#if $lte ask oldask }}
+                      <a href="#!" class="collection-item red-text itemnospace js-trade-button-buy">{{ask}}</a>
+                    {{else}}
+                      <a href="#!" class="collection-item blue-text itemnospace js-trade-button-buy">{{ask}}</a>
+                    {{/if}}
 
-          </div>
+                  {{/each}}                      
+                </div>
+            </div>
 
-            <div class="col-lg-6 rates">
-            {{#if editmode}}
-              <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">New Trade</h3>
-              </div>
-              <div class="panel-body">
-
-              
-                
+        </div>
+      </div>     
+      <div class="col s12 m6 l6">
+        {{#if editmode}}
+                             
                 <h3>
                     
                         <span class="label label-success">{{editsymbol}}</span>
@@ -80,21 +70,14 @@
                     {{/if}}
 
                   </fieldset>
-                  <button type="submit" class="btn btn-primary">Send</button>
-                  <button type="button" class="btn btn-primary js-notrade">Cancel</button>
+                  <button type="submit" class="btn waves-effect waves-light green">Open</button>
+                  <button type="button" class="btn waves-effect waves-light red js-notrade">Cancel</button>
                 {{/autoForm}}
 
-                
-              
-              
-                           
-            </div>  
-            </div>
-            {{/if}}
-            </div>
-            
-           
-    
-        
-</div>
+       {{/if}}         
+      </div>  
+
+       
+  </div>
+</div>            
 </template>          

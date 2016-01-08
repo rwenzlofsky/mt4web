@@ -95,15 +95,32 @@ Picker.route('/allsymbols/:symbols', function(params,req,res,next) {
   var j=JSON.parse(theJSON);
   var theSymbolArray = [];
   
-//  console.log(j);
+  var oldSymbol;
+  var oldBid, oldAsk;
 
   j.forEach(function(theSymbol) {
      
+     // Keep previous price to compare if higher or lower
+     oldSymbol = Symbols.findOne({symbol: theSymbol.s, user: theSymbol.u});
+     if(oldSymbol !== undefined) {
+        old_bid = oldSymbol.bid;
+        old_ask = oldSymbol.ask;
+
+     } else {
+
+        old_bid = -1;
+        old_ask = -1;
+
+     }
+
+
      Symbols.update({symbol: theSymbol.s, user: theSymbol.u}, 
                 {$set: {
-                  symbol: theSymbol.s, 
+                  //symbol: theSymbol.s, 
                   bid: theSymbol.b,
                   ask: theSymbol.a,
+                  oldbid: old_bid,
+                  oldask: old_ask,
                   user: theSymbol.u
                 }}, {upsert: true}); 
 
@@ -172,7 +189,7 @@ Picker.route('/marketstatus/:status', function(params,req,res,next) {
 
      marketStatus.update({}, 
             {$set: {
-              status: params.status, 
+              status: params.status,               
             }}, {upsert: true}); 
 
 }); 
