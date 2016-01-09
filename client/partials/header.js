@@ -10,3 +10,12 @@ Template.header.events({
 	}
 	
 });
+
+
+Template.header.events({
+    'click #login-buttons-logout': function (event) {
+        //add your custom logic on top of this
+        FlowRouter.go('home');
+       //the default behaviour should still happen from meteor
+    }
+});

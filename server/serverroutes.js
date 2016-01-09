@@ -9,7 +9,7 @@ Picker.route('/mt4/:account', function(params,req,res,next) {
 
   
   obj=JSON.parse(accountJSON);
-  console.log(obj);
+  //console.log(obj);
   
   
   if(AccountInfo.find().count() == 0) {
@@ -37,6 +37,8 @@ Picker.route('/openorders/:orders', function(params,req,res,next) {
   
   obj=JSON.parse(accountJSON);
   
+  // Convert date string to dates
+
 
   OpenOrders.update({ticket: obj.ticket}, 
           {$set: {
@@ -140,7 +142,7 @@ Picker.route('/allsymbols/:symbols', function(params,req,res,next) {
 
 Picker.route('/getqueue/:action', function(params,req,res,next) {
   
-  console.log(params.action);
+  //console.log(params.action);
   if (params.action === 'closed') {
       console.log("Client: Trade Closed successfully");
 
