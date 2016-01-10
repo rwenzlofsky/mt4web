@@ -3,6 +3,7 @@ Session.set('editCurrency','');
 Session.set('openPrice',0);
 Session.set('tradeMode','');
 editModeNewTrade = new ReactiveVar(false);
+updateModeTrade = new ReactiveVar(false);
 
 // Hook into form send to make some validations
 
@@ -89,6 +90,11 @@ Template.Rates.helpers (
 
     },
 
+  updatemode: function() {
+
+      return updateModeTrade.get();
+  },
+
   editmode: function() {
 
   	//return Template.instance().editModeNewTrade.get();
@@ -121,7 +127,20 @@ Template.Rates.helpers (
   	else {
   			return false;
   	}
-  }
+  },
+
+    theorders: function() {
+               
+      var orders =  OpenOrders.find();
+
+      if (orders) {
+        return orders;    
+      } else {
+
+        return false;    
+      }
+
+    }
 
  
 });    
@@ -168,10 +187,34 @@ Template.Rates.events({
 
 		//template.editModeNewTrade.set(false);
 		editModeNewTrade.set(false);
-		
-		
-      
     
+  },
+
+  "click .js-noupdate": function (event, template) {
+
+    //template.editModeNewTrade.set(false);
+    updateModeTrade.set(false);
+    
+  },
+
+  "click .js-close-button": function (event, template) {
+    console.log("ID=",this.ticket);
+    
+    tradeQueue.insert({
+        ticket: this.ticket,
+        activity: "C"
+    });
+  },
+
+  "click .js-change-button": function (event, template) {
+    console.log("ID=",this.ticket);
+    
+    updateModeTrade.set(true);
+
+    /*tradeQueue.insert({
+        ticket: this.ticket,
+        activity: "C"
+    });*/
   },
 
   "mouseenter .js-hover-bid": function (event, template) {

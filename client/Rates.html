@@ -3,8 +3,46 @@
 
  <div class="card-panel white">
  <div class="row">
-       
+      <!-- Edit mode: show open trade form -->
+      {{#if editmode}} 
+            <div class="col s12 m6 l6">
+              
+                                   
+                      <h5>                          
+                              <span class="label label-success">{{editsymbol}}</span>
+                              <span class="label label-success">{{openprice}}</span>                          
+                      </h5>
+                     
+                     {{#autoForm collection="newTrades" id="insertNewTrade" type="insert"}}
+                        <fieldset>
+                                              
+                          {{> afQuickField name="symbol"}}
+                          {{> afQuickField name="volumen" step="0.10"}}
+                          {{> afQuickField name="stoploss"}}
+                          {{> afQuickField name="takeprofit"}}                    
+                          {{> afQuickField name="comment"}}
+                          {{> afQuickField name="tradetypes" options="allowed"}}
+                          {{#if afFieldValueIs name="tradetypes" value="Market"}}   
+                                {{> afQuickField name="maxdevpoints"}}
+                          {{/if}}
+                          {{#if afFieldValueIs name="tradetypes" value="Limit"}}   
+                                 {{> afQuickField name="pendingprice" value=openprice }}      
+                          {{/if}}
+                          {{#if afFieldValueIs name="tradetypes" value="Stop"}}   
+                                 {{> afQuickField name="pendingprice" value=openprice}}      
+                          {{/if}}
+
+                        </fieldset>
+                        <button type="submit" class="btn waves-effect waves-light green">Open</button>
+                        <button type="button" class="btn waves-effect waves-light red js-notrade">Cancel</button>
+                      {{/autoForm}}
+
+                      
+            </div>  
+      <!-- Not in edit mode: show rate panel -->      
+      {{else}}
       <div class="col s12 m6 l6">
+
         <div class="row">   
             <div class="col s2 m2 l2 nospace">
                   <ul class="collection">
@@ -39,44 +77,68 @@
             </div>
 
         </div>
-      </div>     
+      </div>    
+      {{/if}} 
+      <!-- Open trades panel -->
+      {{#if updatemode}} 
       <div class="col s12 m6 l6">
-        {{#if editmode}}
-                             
-                <h3>
+        <h2>Update Mode</h2>
+
+         {{#autoForm collection="OpenOrders" doc=this  id="updateTrade" type="update"}}
+            <fieldset>
+                                  
+              {{> afQuickField name="open"}}
+              {{> afQuickField name="close"}}                    
+              {{> afQuickField name="lots"}}
+              {{> afQuickField name="stoploss"}}
+              {{> afQuickField name="takeprofit"}}
+
+            </fieldset>
+            <button type="submit" class="btn waves-effect waves-light green">Change</button>
+            <button type="button" class="btn waves-effect waves-light red  js-noupdate">Cancel</button>
+          {{/autoForm}}
+
+      </div>
+      {{else}}
+      <div class="col s12 m6 l6">
+            <table>
+                  <thead class="white-black">
                     
-                        <span class="label label-success">{{editsymbol}}</span>
-                        <span class="label label-success">{{openprice}}</span>
+                    <tr>
+                        <th data-field="symbol">Symbol</th>
+                        <th data-field="ticket">Ticket</th>
+                        <th data-field="price">Open</th>
+                        <th data-field="trade">Close</th>
+                        <th data-field="trade">SL</th>
+                        <th data-field="trade">TP</th>
+                        <th data-field="profit">Profit</th>
+                    </tr>
+                  </thead>
+                <tbody class="black-text">                  
+                  {{#each theorders}}
+                      
+                      <tr>
+                        <td>{{symbol}}</td>
+                        <td>{{ticket}}</td>
+                        <td>{{open}}</td>
+                        <td>{{close}}</td>
+                        <td>{{stoploss}}</td>
+                        <td>{{takeprofit}}</td>
+                        <td>{{orderprofit}}</td>
+                        <td>
+                        <a class="waves-effect waves-light btn js-close-button orange"><i class="material-icons left">Close</i></a>
+                        </td>
+                        <td>
+                        <a class="waves-effect waves-light btn js-change-button orange"><i class="material-icons left">Change</i></a>
+                        </td>
+                      </tr>
                     
-                </h3>
-               
-               {{#autoForm collection="newTrades" id="insertNewTrade" type="insert"}}
-                  <fieldset>
-                                        
-                    {{> afQuickField name="symbol"}}
-                    {{> afQuickField name="volumen" step="0.10"}}
-                    {{> afQuickField name="stoploss"}}
-                    {{> afQuickField name="takeprofit"}}                    
-                    {{> afQuickField name="comment"}}
-                    {{> afQuickField name="tradetypes" options="allowed"}}
-                    {{#if afFieldValueIs name="tradetypes" value="Market"}}   
-                          {{> afQuickField name="maxdevpoints"}}
-                    {{/if}}
-                    {{#if afFieldValueIs name="tradetypes" value="Limit"}}   
-                           {{> afQuickField name="pendingprice" value=openprice }}      
-                    {{/if}}
-                    {{#if afFieldValueIs name="tradetypes" value="Stop"}}   
-                           {{> afQuickField name="pendingprice" value=openprice}}      
-                    {{/if}}
-
-                  </fieldset>
-                  <button type="submit" class="btn waves-effect waves-light green">Open</button>
-                  <button type="button" class="btn waves-effect waves-light red js-notrade">Cancel</button>
-                {{/autoForm}}
-
-       {{/if}}         
-      </div>  
-
+                  {{/each}}
+                </tbody>
+                
+                </table>
+      </div>
+      {{/if}}
        
   </div>
 </div>            

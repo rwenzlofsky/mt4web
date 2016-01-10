@@ -1,3 +1,4 @@
+
 Template.header.onRendered(function () {
  	$(".button-collapse").sideNav();
 });
@@ -7,15 +8,29 @@ Template.header.events({
 		event.preventDefault();		
 		$(".button-collapse").sideNav('show');
 		
-	}
-	
-});
+	},
 
-
-Template.header.events({
     'click #login-buttons-logout': function (event) {
         //add your custom logic on top of this
         FlowRouter.go('home');
        //the default behaviour should still happen from meteor
     }
+	
+});
+
+Template.header.helpers (
+{
+	
+	theUser: function() {
+		
+			return Meteor.user().emails[0].address;
+		
+	},
+	showloginbutton: function() {
+		
+			return Meteor.user();
+
+		
+	}
+
 });

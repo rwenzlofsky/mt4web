@@ -20,6 +20,7 @@ insecure                # Allow all DB writes from clients (for prototyping)
 aldeed:autoform
 aldeed:collection2
 aldeed:simple-schema
+aldeed:template-extension
 kadira:flow-router
 kadira:blaze-layout
 meteorhacks:picker
@@ -28,7 +29,9 @@ accounts-password
 accounts-ui
 meteortoys:allthings
 materialize:materialize
+gildaspk:autoform-materialize
 ixdi:material-design-iconic-font
 raix:handlebar-helpers
 momentjs:moment
 useraccounts:materialize
+meteorhacks:kadira
