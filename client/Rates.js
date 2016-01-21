@@ -56,11 +56,17 @@ AutoForm.hooks({
 
 Template.Rates.onCreated(function() {
 
-	//this.editModeNewTrade = new ReactiveVar(false);
-	
-	
+  var instance = this;
 
-});
+  instance.autorun(function () {
+
+    
+      instance.subscribe('symbols');
+
+    });
+
+}); 
+
 
 
 Template.Rates.helpers (
@@ -79,7 +85,7 @@ Template.Rates.helpers (
  thesymbols: function() {
       
             
-      var symbols =  Symbols.find({}, {sort: {symbol: 1}});
+      var symbols =  Symbols.find({user: Meteor.user().emails[0].address}, {sort: {symbol: 1}});
 
       if (symbols) {
         return symbols;    
@@ -131,7 +137,7 @@ Template.Rates.helpers (
 
     theorders: function() {
                
-      var orders =  OpenOrders.find();
+      var orders =  OpenOrders.find({user: Meteor.user().emails[0].address});
 
       if (orders) {
         return orders;    

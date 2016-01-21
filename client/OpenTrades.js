@@ -1,11 +1,26 @@
 
-Meteor.subscribe("openorders");
+//Meteor.subscribe("openorders");
+
+Template.Rates.onCreated(function() {
+
+  var instance = this;
+
+  instance.autorun(function () {
+
+    
+      instance.subscribe('openorders');
+
+    });
+
+}); 
+
+
 
 Template.OpenTrades.helpers (
 {
 	theorders: function() {
                
-      var orders =  OpenOrders.find();
+      var orders =  OpenOrders.find({user: Meteor.user().emails[0].address});
 
       if (orders) {
         return orders;    

@@ -9,16 +9,34 @@ Picker.route('/mt4/:account', function(params,req,res,next) {
 
   
   obj=JSON.parse(accountJSON);
-  //console.log(obj);
-  
-  
-  if(AccountInfo.find().count() == 0) {
-	    AccountInfo.insert(obj);	
-  }
-	
-  else {
-      AccountInfo.update({},   {$set: obj });
-  }
+
+  var theUser = Meteor.call('getUser');
+  console.log(theUser);
+
+
+
+  AccountInfo.update( {user: obj.user, number: obj.number}, 
+                   {
+                    $set: {
+                      balance: obj.balance,
+                      credit: obj.credit,
+                      company: obj.company,
+                      currency: obj.currency,
+                      equity: obj.equity,
+                      freemargin: obj.freemargin,
+                      leverage: obj.leverage,
+                      margin: obj.margin,
+                      name: obj.name,
+                      number: obj.number,
+                      profit: obj.profit,
+                      server: obj.server,
+                      stopoutlevel: obj.stopoutlevel,
+                      stopoutmode: obj.stopoutmode,
+                      user: obj.user  
+
+                   }
+
+                 } , {upsert: true});
 
   
 });
@@ -91,10 +109,16 @@ Picker.route('/allsymbols/:symbols', function(params,req,res,next) {
   
   res.end("Symbol-List received");
 
+  
   var x = params.symbols;
   var uri_dec = decodeURIComponent(x);
+  
+
+
   var theJSON = uri_dec.replace(/'/g,"\"");
   var j=JSON.parse(theJSON);
+
+
   var theSymbolArray = [];
   
   var oldSymbol;

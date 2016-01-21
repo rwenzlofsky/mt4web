@@ -1,13 +1,27 @@
 
-Meteor.subscribe("accountinfo");
+//Meteor.subscribe("accountinfo");
 Meteor.subscribe("currentrates");
 Meteor.subscribe("tradequeue");
 
-Meteor.subscribe("symbols");
+//Meteor.subscribe("symbols");
 Meteor.subscribe("marketstatus");
 Meteor.subscribe("newtrades");
 
 
+Template.Account.onCreated(function() {
+
+  var instance = this;
+
+  instance.autorun(function () {
+
+    
+      instance.subscribe('accountinfo');
+
+}); 
+
+
+
+});
 
 Template.Account.helpers (
 {
@@ -28,14 +42,9 @@ Template.Account.helpers (
 
 	  profit: function() {
 
-      var x = AccountInfo.findOne({}).profit;      
-			if(x !== undefined) {
+      	
         return AccountInfo.findOne({}).profit;
-      }
-      else {
-
-        return "Unknown";
-      }
+      
 		  
     },
     balance: function() {
@@ -48,7 +57,7 @@ Template.Account.helpers (
     },
     freemargin: function() {
             
-      return  AccountInfo.findOne().freemargin;
+      return  AccountInfo.findOne({}).freemargin;
       
     },
     company: function() {
@@ -69,7 +78,7 @@ Template.Account.helpers (
 
     },
     marketstatus: function() {
-      return marketStatus.findOne({}).status;
+      return marketStatus.find({user: Meteor.user().emails[0].address}).status;
 
     }
   

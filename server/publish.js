@@ -1,43 +1,47 @@
 Meteor.publish("accountinfo", function() {
 
-	return AccountInfo.find();
+	return AccountInfo.find({user: currentUserId});
 
 });
 
 Meteor.publish("openorders", function() {
 
-	return OpenOrders.find();
+	return OpenOrders.find({user: currentUserId});
 
 });
 
 Meteor.publish("currentrates", function() {
 
-	return currentRates.find();
+	return currentRates.find({user: currentUserId});
 
 });
 
 Meteor.publish("tradequeue", function() {
 
-	return tradeQueue.find();
+	return tradeQueue.find({user: currentUserId});
 
 });
 
 
 Meteor.publish("symbols", function() {
 
-	return Symbols.find();
+	return Symbols.find({user: currentUserId});
 
 });
 
 Meteor.publish("marketstatus", function() {
 
-	return marketStatus.find();
+	return marketStatus.find({user: currentUserId});
 
 });
 
 Meteor.publish("newtrades", function() {
 
-	return newTrades.find();
+	return newTrades.find({user: currentUserId});
 
+});
+
+Meteor.publish(null, function(){
+  currentUserId = Meteor.user().emails[0].address;
 });
 
