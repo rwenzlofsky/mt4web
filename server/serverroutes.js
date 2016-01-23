@@ -10,12 +10,12 @@ Picker.route('/mt4/:account', function(params,req,res,next) {
   
   obj=JSON.parse(accountJSON);
 
-  var theUser = Meteor.call('getUser');
-  console.log(theUser);
+  //var theUser = Meteor.call('getUser');
+  
 
 
 
-  AccountInfo.update( {user: obj.user, number: obj.number}, 
+  AccountInfo.update( {user: obj.user}, 
                    {
                     $set: {
                       balance: obj.balance,
@@ -171,7 +171,7 @@ Picker.route('/getqueue/:action', function(params,req,res,next) {
       console.log("Client: Trade Closed successfully");
 
   } else if (params.action === 'read') {
-      console.log("Client: Fetching queue");      
+      //console.log("Client: Fetching queue");      
 
   }
 

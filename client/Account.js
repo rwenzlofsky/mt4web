@@ -6,6 +6,7 @@ Meteor.subscribe("tradequeue");
 //Meteor.subscribe("symbols");
 Meteor.subscribe("marketstatus");
 Meteor.subscribe("newtrades");
+Meteor.subscribe("forexcalendar");
 
 
 Template.Account.onCreated(function() {
@@ -87,6 +88,7 @@ Template.Account.helpers (
 
 		
 });
+
 
 
 

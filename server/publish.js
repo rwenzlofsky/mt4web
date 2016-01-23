@@ -41,6 +41,12 @@ Meteor.publish("newtrades", function() {
 
 });
 
+Meteor.publish("forexcalendar", function() {
+
+	return forexCalendar.find({});
+
+});
+
 Meteor.publish(null, function(){
   currentUserId = Meteor.user().emails[0].address;
 });

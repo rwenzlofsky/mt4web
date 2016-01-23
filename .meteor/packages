@@ -35,3 +35,6 @@ raix:handlebar-helpers
 momentjs:moment
 useraccounts:materialize
 meteorhacks:kadira
+peerlibrary:xml2js
+cfs:filesystem
+http

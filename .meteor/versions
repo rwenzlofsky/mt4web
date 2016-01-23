@@ -18,6 +18,9 @@ boilerplate-generator@1.0.4
 caching-compiler@1.0.0
 caching-html-compiler@1.0.2
 callback-hook@1.0.4
+cfs:base-package@0.0.30
+cfs:filesystem@0.1.2
+cfs:storage-adapter@0.2.3
 check@1.1.0
 coffeescript@1.0.11
 cosmos:browserify@0.9.3
@@ -89,7 +92,10 @@ npm-bcrypt@0.7.8_2
 npm-mongo@1.4.39_1
 observe-sequence@1.0.7
 ordered-dict@1.0.4
+peerlibrary:blocking@0.5.2
+peerlibrary:xml2js@0.4.8_1
 promise@0.5.1
+raix:eventemitter@0.1.3
 raix:handlebar-helpers@0.2.5
 random@1.0.5
 rate-limit@1.0.0
